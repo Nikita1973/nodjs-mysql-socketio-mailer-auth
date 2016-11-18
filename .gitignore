@@ -3,3 +3,4 @@
 /spec/
 .directory
 config.js
+.gitignore

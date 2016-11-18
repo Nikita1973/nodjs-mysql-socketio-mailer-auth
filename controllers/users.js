@@ -1,7 +1,9 @@
 var emailValidator = require('email-validator');
 var generatePassword = require('password-generator');
 var bcrypt = require('bcrypt');
-var config = require('../config').password;
+var config = require('../config');
+var nodemailer = require('nodemailer');
+var smtpTransport = require('nodemailer-smtp-transport');
 
 module.exports = function(app, modelUser, io){
 
@@ -84,9 +86,7 @@ module.exports = function(app, modelUser, io){
 
 
 							 	// TODO:	4. Отослать пароль по почте
-							 	// 
-							 	// 
-							 	// 
+							 	sendMail(new_pass);
 							 	socket.emit('reg_ok', 'reg_ok?email=' + email);
 
 							});
@@ -182,6 +182,7 @@ module.exports = function(app, modelUser, io){
 
 								if (res === true) {
 									// password is good
+									// TODO:
 									// Стартуем сессию 
 									// и сохраняем куки если стояла галочка rememberme
 									//  	socket.emit('reg_ok', 'reg_ok?email=' + email);
@@ -235,17 +236,17 @@ var getHashFromPass = function(pass, cb){
 // Вспомогательная функция
 // Настройки в ../config.password
 function isStrongEnough(password) {
-  var uc = password.match(config.UPPERCASE_RE);
-  var lc = password.match(config.LOWERCASE_RE);
-  var n = password.match(config.NUMBER_RE);
-  var sc = password.match(config.SPECIAL_CHAR_RE);
-  var nr = password.match(config.NON_REPEATING_CHAR_RE);
-  return password.length >= config.minLength &&
+  var uc = password.match(config.password.UPPERCASE_RE);
+  var lc = password.match(config.password.LOWERCASE_RE);
+  var n = password.match(config.password.NUMBER_RE);
+  var sc = password.match(config.password.SPECIAL_CHAR_RE);
+  var nr = password.match(config.password.NON_REPEATING_CHAR_RE);
+  return password.length >= config.password.minLength &&
     !nr &&
-    uc && uc.length >= config.uppercaseMinCount &&
-    lc && lc.length >= config.lowercaseMinCount &&
-    n && n.length >= config.numberMinCount &&
-    sc && sc.length >= config.specialMinCount;
+    uc && uc.length >= config.password.uppercaseMinCount &&
+    lc && lc.length >= config.password.lowercaseMinCount &&
+    n && n.length >= config.password.numberMinCount &&
+    sc && sc.length >= config.password.specialMinCount;
 }
 
 // ====================================
@@ -254,10 +255,24 @@ function isStrongEnough(password) {
 // Вызываемая функция
 function customPassword() {
   var password = "";
-  var randomLength = Math.floor(Math.random() * (config.maxLength - config.minLength)) + config.minLength;
+  var randomLength = Math.floor(Math.random() * (config.password.maxLength - config.password.minLength)) + config.password.minLength;
   while (!isStrongEnough(password)) {
     password = generatePassword(randomLength, false, /[\w\d\?\-]/);
   }
 
   return password;
+}
+
+// !!!for gmail!!!
+// https://www.google.com/settings/security/lesssecureapps
+function sendMail(mailBody) {
+	var transporter = nodemailer.createTransport(smtpTransport(config.mail.gmail));
+
+	transporter.sendMail({
+		from: config.mail.from,
+		to: config.mail.to,
+		subject: 'Thank you for registration!',
+		html: '<h1>hello, world!</h1><p>Your password is: ' + mailBody + '</p>',
+		text: 'hello, world! Your password is: ' + mailBody
+	});
 }
