@@ -84,9 +84,8 @@ module.exports = function(app, modelUser, io){
 									throw err;
 								}
 
-
-							 	// TODO:	4. Отослать пароль по почте
 							 	sendMail(new_pass);
+
 							 	socket.emit('reg_ok', 'reg_ok?email=' + email);
 
 							});
@@ -132,10 +131,8 @@ module.exports = function(app, modelUser, io){
 									throw err;
 								}
 
-							 	// TODO:	4. Отослать пароль по почте
-							 	// 
-							 	// 
-							 	// 
+							 	sendMail(new_pass);
+
 							 	socket.emit('remember_ok', 'remember_ok?email=' + email);
 
 							});
