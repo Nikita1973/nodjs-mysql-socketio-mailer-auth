@@ -1,0 +1,49 @@
+module.exports = {
+	
+	// Настройки для Mysql
+	db: {
+		host: 'localhost',
+		user: 'user',
+		password: 'pass-for-user',
+		database: 'db-for-project',
+		connectionLimit: 100
+	},
+
+	// Настройки для модуля генерации пароля
+	password: {
+		// максимальная длина пароля
+		maxLength: 18,
+		// минимальная длина пароля
+		minLength: 12,
+		// минимальное количество символов в верхнем регистре
+		uppercaseMinCount: 3,
+		// минимальное количество символов в нижнем регистре
+		lowercaseMinCount:3,
+		// миниммальное количество цифр
+		numberMinCount: 2,
+		// минимальное количество спец. символов
+		specialMinCount:2,
+		UPPERCASE_RE: /([A-Z])/g,
+		LOWERCASE_RE: /([a-z])/g,
+		NUMBER_RE: /([\d])/g,
+		SPECIAL_CHAR_RE: /([\?\-])/g,
+		NON_REPEATING_CHAR_RE: /([\w\d\?\-])\1{2,}/g
+	},
+
+	//	TODO: еще нигде не используется
+	//	надо заменить везде где локально указано
+	pass_gen: {
+		saltAround: 10
+	},
+
+	// настройки для express-session
+	// sessions: {
+	// 	secretKeyForSession :'anySecretKeyForSession',	
+	// 	resave: false,
+	// 	saveUninitialized: false
+	// },
+
+	// порт, на котором слушает сервер
+	port: 3000
+
+}

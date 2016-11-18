@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="css/main.css">
+	<title></title>
+</head>
+<body>
+	<div align="center">
+		<h1>Регистрация нового пользователя</h1>
+
+		<div align="center">
+			<div class="error" id="err_msg">
+				<% if (error.length > 0) { %>
+					<%= error %>
+				 <% } %>
+			</div>
+			<!-- <form action="reg" method="POST"> -->
+				<table cellspacing="5" cellpadding="5" border="0">
+					<tr>
+						<td align="right">Ваш email:</td>
+						<td align="left"><input type="email" name="email" id="email" value="test@test.com"></td>
+					</tr>
+					<tr>
+						<td colspan="2" align="center"><input type="submit" name="subm_reg" id="subm_reg" value="Зарегистрировать"></td>
+					</tr>
+					<tr>
+						<td align="right"><a href="login">Вход</a></td>
+						<td align="left"><a href="remember">Вспомнить пароль</a></td>
+					</tr>
+				</table>
+			<!-- </form> -->
+		</div>
+	</div>
+
+
+<script src="js/socket.io.js"></script>
+<script src="js/reg.js"></script>
+
+</body>
+</html>

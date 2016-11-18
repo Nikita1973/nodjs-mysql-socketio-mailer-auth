@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="css/main.css">
+	<title></title>
+</head>
+<body>
+	<div align="center">
+		<h1>Восстановление пароля</h1>
+
+		<div align="center">
+			<div class="error" id="err_msg">
+				<% if (error.length > 0) { %>
+					<%= error %>
+				 <% } %>
+			</div>
+				<table cellspacing="5" cellpadding="5" border="0">
+					<tr>
+						<td align="right">Ваш email:</td>
+						<td align="left"><input type="email" name="email" id="email" value="test@test14.com"></td>
+					</tr>
+					<tr>
+						<td align="right">Пароль:</td>
+						<td align="left"><input type="password" name="password" id="password" value="?GCqZ?KawRyTqo88T"></td>
+					</tr>
+					<tr>
+						<td align="right"></td>
+						<td align="left"><label><input type="checkbox" name="rememberme" id="rememberme" checked />Remember Me</label></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td align="left"><input type="submit" name="subm_login" id="subm_login" value="Войти"></td>
+					</tr>
+					<tr>
+						<td align="right"><a href="remember">Вспомнить пароль</a></td>
+						<td align="left"><a href="reg">Регистрация</a></td>
+					</tr>
+				</table>
+		</div>
+	</div>
+
+
+<script src="js/socket.io.js"></script>
+<script src="js/login.js"></script>
+
+</body>
+</html>
